@@ -11,6 +11,8 @@
     "test:watch": "vitest",
     "e2e": "playwright test"
   },
+  "author": "Yuma Shintani",
+  "license": "MIT",
   "dependencies": {
     "@headlessui/react": "^2.2.10",
     "next": "16.2.10",
