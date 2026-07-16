@@ -21,6 +21,25 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: TITLE,
   description: DESCRIPTION,
+  keywords: [
+    "サブネットマスク",
+    "サブネット計算",
+    "CIDR",
+    "IPアドレス計算",
+    "ネットワークアドレス",
+    "ブロードキャストアドレス",
+  ],
+  alternates: {
+    canonical: SITE_URL,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
@@ -36,6 +55,23 @@ export const metadata: Metadata = {
   },
 };
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: TITLE,
+  description: DESCRIPTION,
+  url: SITE_URL,
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "Any",
+  browserRequirements: "Requires JavaScript",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "JPY",
+  },
+  inLanguage: "ja",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -46,7 +82,14 @@ export default function RootLayout({
       lang="ja"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
