@@ -1,11 +1,28 @@
 {
   automerge: false,
+  // npm 12 fails on bundled registry tarballs during --package-lock-only.
+  // Remove this workaround once https://github.com/npm/cli/issues/9800 is fixed.
+  constraints: {
+    npm: "^11.19.0",
+  },
   dependencyDashboard: false,
   labels: ["dependencies"],
   minimumReleaseAge: "7 days",
   minimumReleaseAgeBehaviour: "timestamp-optional",
   groupName: "all dependencies",
   packageRules: [
+    {
+      // eslint-config-next still includes plugins whose peers require ESLint <10.
+      matchManagers: ["npm"],
+      matchPackageNames: ["eslint"],
+      allowedVersions: "<10.0.0",
+    },
+    {
+      // typescript-eslint currently supports TypeScript >=4.8.4 <6.1.0.
+      matchManagers: ["npm"],
+      matchPackageNames: ["typescript"],
+      allowedVersions: "<6.1.0",
+    },
     {
       matchManagers: ["github-actions"],
       groupName: "github-actions",
