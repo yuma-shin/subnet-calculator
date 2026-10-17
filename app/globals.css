@@ -1,37 +1,387 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-background: var(--soft-bg);
+  --color-foreground: var(--soft-ink);
+  --font-sans: var(--font-zen-maru-gothic);
   --font-mono: var(--font-geist-mono);
 }
 
+.soft-ui {
+  --soft-bg: #f0f0ed;
+  --soft-surface: #fdfdfc;
+  --soft-ink: #2e2e2b;
+  --soft-secondary: #555550;
+  --soft-input: #f5f5f2;
+  --soft-hover: #e8e8e2;
+  --soft-selected: #deded6;
+  --soft-highlight: #fff;
+  --soft-inset: #e4e4de;
+  --soft-focus: #646460;
+  --soft-halo: #77776b18;
+  --soft-error-bg: #f7e0de;
+  --soft-error-ink: #9b3b35;
+  --soft-panel-shadow: 0 14px 32px #34342b12, 0 4px 10px #34342b08;
+  --soft-overlay-shadow: 0 20px 52px #24242422, 0 5px 14px #2424240d;
+  color-scheme: light;
+  background: var(--soft-bg);
+  color: var(--soft-ink);
+  font-family: var(--font-zen-maru-gothic), "Hiragino Maru Gothic ProN", Meiryo, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.85;
+}
+
+/* Keep the existing system-controlled theme, including portalled UI. */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .soft-ui {
+    --soft-bg: #202020;
+    --soft-surface: #30302e;
+    --soft-ink: #eeeeeb;
+    --soft-secondary: #d0d0c9;
+    --soft-input: #242424;
+    --soft-hover: #43433e;
+    --soft-selected: #505049;
+    --soft-highlight: #ffffff0c;
+    --soft-inset: #10101040;
+    --soft-focus: #bcbcb7;
+    --soft-halo: #d2d2c71c;
+    --soft-error-bg: #4d3030;
+    --soft-error-ink: #f1b1ab;
+    --soft-panel-shadow: 0 16px 36px #00000055, 0 4px 12px #00000033;
+    --soft-overlay-shadow: 0 20px 52px #00000077, 0 5px 14px #00000044;
+    color-scheme: dark;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.soft-ui :where(button, input) {
+  font: inherit;
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
+.soft-ui :where(button, input):focus-visible {
+  outline: 2px solid var(--soft-focus);
+  outline-offset: 4px;
+}
+
+.soft-ui .calculator-page {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  padding: 80px 24px;
+}
+
+.soft-ui .calculator-container {
+  display: flex;
+  width: 100%;
+  max-width: 704px;
+  min-width: 0;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.soft-ui .calculator-header {
+  text-align: center;
+}
+
+.soft-ui .calculator-header h1 {
+  font-size: clamp(30px, 4.5vw, 36px);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.soft-ui .calculator-header p {
+  max-width: 560px;
+  margin: 14px auto 0;
+  color: var(--soft-secondary);
+  font-size: 14px;
+  text-wrap: pretty;
+}
+
+.soft-ui .calculator-app,
+.soft-ui .calculator-controls {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.soft-ui .soft-card {
+  border: 0;
+  border-radius: 28px;
+  padding: 28px;
+  background: var(--soft-surface);
+  box-shadow: var(--soft-panel-shadow);
+}
+
+.soft-ui .calculator-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 24px;
+}
+
+.soft-ui .soft-field-group {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.soft-ui .soft-label {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.soft-ui .soft-field {
+  width: 100%;
+  min-width: 0;
+  min-height: 56px;
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 21px;
+  background: var(--soft-input);
+  color: var(--soft-ink);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  box-shadow: inset 3px 3px 7px var(--soft-inset), inset -3px -3px 7px var(--soft-highlight);
+}
+
+.soft-ui .soft-field::placeholder {
+  color: var(--soft-secondary);
+  opacity: 1;
+}
+
+.soft-ui .soft-field:focus {
+  outline: 2px solid var(--soft-focus);
+  outline-offset: 3px;
+  box-shadow: inset 2px 2px 5px var(--soft-inset), inset -2px -2px 5px var(--soft-highlight), 0 0 0 6px var(--soft-halo);
+}
+
+.soft-ui .soft-field:disabled,
+.soft-ui .cidr-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.soft-ui .cidr-input {
+  padding-right: 48px;
+}
+
+.soft-ui .cidr-button {
+  position: absolute;
+  inset: 0 0 0 auto;
+  display: flex;
+  width: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: var(--soft-secondary);
+  cursor: pointer;
+  transition: background-color 180ms ease;
+}
+
+.soft-ui .soft-menu {
+  border: 0;
+  border-radius: 24px;
+  padding: 8px;
+  background: var(--soft-surface);
+  box-shadow: var(--soft-overlay-shadow);
+}
+
+.soft-ui .cidr-options {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  max-height: 288px;
+  margin-top: 12px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--soft-selected) var(--soft-surface);
+}
+
+.soft-ui .soft-option {
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-radius: 18px;
+  padding: 12px;
+  color: var(--soft-ink);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 160ms ease;
+}
+
+.soft-ui .soft-option[data-selected] {
+  background: var(--soft-input);
+  font-weight: 700;
+}
+
+.soft-ui .soft-option[data-focus] {
+  background: var(--soft-selected);
+  outline: 2px solid var(--soft-focus);
+  outline-offset: -2px;
+}
+
+.soft-ui .cidr-check {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  visibility: hidden;
+}
+
+.soft-ui .soft-option[data-selected] .cidr-check {
+  visibility: visible;
+}
+
+.soft-ui .cidr-empty {
+  padding: 16px 12px;
+  color: var(--soft-secondary);
+  font-size: 14px;
+}
+
+.soft-ui .format-field {
+  align-items: flex-start;
+}
+
+.soft-ui .format-options {
+  display: inline-grid;
+  max-width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  border-radius: 999px;
+  padding: 5px;
+  background: var(--soft-input);
+  box-shadow: inset 2px 2px 5px var(--soft-inset), inset -2px -2px 5px var(--soft-highlight);
+}
+
+.soft-ui .format-option {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 10px 22px;
+  color: var(--soft-secondary);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.soft-ui .format-option[data-checked] {
+  background: var(--soft-surface);
+  color: var(--soft-ink);
+  box-shadow: 0 3px 8px #34342b12;
+}
+
+.soft-ui .format-option:has(input:focus-visible) {
+  outline: 2px solid var(--soft-focus);
+  outline-offset: 3px;
+}
+
+.soft-ui .format-option[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.soft-ui .soft-notice {
+  border-radius: 18px;
+  padding: 14px 18px;
+  background: var(--soft-error-bg);
+  color: var(--soft-error-ink);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.soft-ui .soft-field-error {
+  color: var(--soft-error-ink);
+  font-size: 14px;
+}
+
+.soft-ui .calculator-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  animation: soft-reveal 180ms ease-out;
+}
+
+.soft-ui .result-item {
+  min-width: 0;
+}
+
+.soft-ui .result-item dt {
+  margin-bottom: 8px;
+  color: var(--soft-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.soft-ui .result-item dd {
+  color: var(--soft-ink);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+@keyframes soft-reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (hover: hover) {
+  .soft-ui .format-option:not([data-disabled], [data-checked]):hover,
+  .soft-ui .cidr-button:not(:disabled):hover,
+  .soft-ui .soft-option:not([data-focus]):hover {
+    background: var(--soft-hover);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+}
+
+@media (max-width: 639px) {
+  .soft-ui .calculator-page {
+    padding: 48px 16px;
+  }
+
+  .soft-ui .calculator-container {
+    gap: 28px;
+  }
+
+  .soft-ui .soft-card {
+    padding: 24px;
+  }
+
+  .soft-ui .calculator-fields,
+  .soft-ui .calculator-results {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .soft-ui .format-options {
+    width: 100%;
+  }
+
+  .soft-ui .format-option {
+    padding-inline: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .soft-ui .calculator-results {
+    animation: none;
+  }
+
+  .soft-ui :is(.format-option, .cidr-button, .soft-option) {
+    transition: none;
   }
 }
