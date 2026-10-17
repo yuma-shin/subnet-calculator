@@ -24,31 +24,33 @@ export function SubnetCalculatorApp() {
   const showError = error !== null && (ipAddress.trim() !== "" || cidr !== null);
 
   return (
-    <div className="flex w-full max-w-2xl flex-col gap-6">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <IpAddressInput
-          id="ip-address"
-          label="IPアドレス"
-          value={ipAddress}
-          onChange={setIpAddress}
+    <div className="calculator-app">
+      <div className="soft-card calculator-controls">
+        <div className="calculator-fields">
+          <IpAddressInput
+            id="ip-address"
+            label="IPアドレス"
+            value={ipAddress}
+            onChange={setIpAddress}
+          />
+          <CidrSelect
+            id="cidr"
+            label="サブネットマスク"
+            value={cidr}
+            onChange={setCidr}
+            options={CIDR_OPTIONS}
+          />
+        </div>
+
+        <DisplayFormatToggle
+          id="display-format"
+          label="表示形式"
+          value={displayFormat}
+          onChange={setDisplayFormat}
         />
-        <CidrSelect
-          id="cidr"
-          label="サブネットマスク"
-          value={cidr}
-          onChange={setCidr}
-          options={CIDR_OPTIONS}
-        />
+
+        {showError ? <ErrorMessage error={error} /> : null}
       </div>
-
-      <DisplayFormatToggle
-        id="display-format"
-        label="表示形式"
-        value={displayFormat}
-        onChange={setDisplayFormat}
-      />
-
-      {showError ? <ErrorMessage error={error} /> : null}
 
       <ResultsPanel result={result} displayFormat={displayFormat} />
     </div>

@@ -20,9 +20,9 @@ export function DisplayFormatToggle({
   onChange,
 }: DisplayFormatToggleProps) {
   return (
-    <div className="flex flex-col gap-1.5">
-      <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{label}</span>
-      <div role="radiogroup" aria-label={label} className="inline-flex rounded-lg border border-zinc-300 p-1 dark:border-zinc-700">
+    <div className="soft-field-group format-field">
+      <span className="soft-label">{label}</span>
+      <div role="radiogroup" aria-label={label} className="format-options">
         {FORMAT_OPTIONS.map((option) => {
           const optionId = `${id}-${option.value}`;
           const checked = value === option.value;
@@ -30,11 +30,9 @@ export function DisplayFormatToggle({
             <label
               key={option.value}
               htmlFor={optionId}
-              className={`cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                checked
-                  ? "bg-indigo-600 text-white"
-                  : "text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
-              }`}
+              className="format-option"
+              data-checked={checked || undefined}
+              data-disabled={disabled || undefined}
             >
               <input
                 type="radio"

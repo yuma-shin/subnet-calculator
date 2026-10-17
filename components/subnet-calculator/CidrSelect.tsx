@@ -22,9 +22,6 @@ interface CidrOption {
   label: string;
 }
 
-const INPUT_CLASS_NAME =
-  "w-full rounded-lg border border-zinc-300 bg-white py-2.5 pl-4 pr-10 text-base text-zinc-900 shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 disabled:cursor-not-allowed disabled:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50";
-
 export function CidrSelect({
   id,
   label,
@@ -50,8 +47,8 @@ export function CidrSelect({
   const selectedOption = cidrOptions.find((option) => option.cidr === value) ?? null;
 
   return (
-    <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+    <div className="soft-field-group">
+      <label htmlFor={id} className="soft-label">
         {label}
       </label>
       <Combobox
@@ -67,13 +64,13 @@ export function CidrSelect({
         <div className="relative">
           <ComboboxInput
             id={id}
-            className={INPUT_CLASS_NAME}
+            className="soft-field cidr-input"
             displayValue={(option: CidrOption | null) => option?.label ?? ""}
             placeholder="選択してください"
             autoComplete="off"
             onChange={(event) => setQuery(event.target.value)}
           />
-          <ComboboxButton className="absolute inset-y-0 right-0 flex items-center px-3 text-zinc-500 dark:text-zinc-400">
+          <ComboboxButton aria-label="CIDRの候補を表示" className="cidr-button">
             <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
               <path
                 fillRule="evenodd"
@@ -82,9 +79,9 @@ export function CidrSelect({
               />
             </svg>
           </ComboboxButton>
-          <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-zinc-200 bg-white py-1 shadow-lg focus:outline-none dark:border-zinc-700 dark:bg-zinc-900">
+          <ComboboxOptions className="soft-menu cidr-options">
             {filteredOptions.length === 0 ? (
-              <div className="px-4 py-2 text-sm text-zinc-500 dark:text-zinc-400">
+              <div className="cidr-empty">
                 該当する項目がありません
               </div>
             ) : (
@@ -92,9 +89,12 @@ export function CidrSelect({
                 <ComboboxOption
                   key={option.cidr}
                   value={option}
-                  className="cursor-pointer px-4 py-2 text-sm text-zinc-900 select-none data-[focus]:bg-indigo-600 data-[focus]:text-white dark:text-zinc-50"
+                  className="soft-option"
                 >
-                  {option.label}
+                  <span>{option.label}</span>
+                  <svg className="cidr-check" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="m4.5 10 3.5 3.5 7.5-7.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </ComboboxOption>
               ))
             )}

@@ -38,14 +38,14 @@ export function ResultsPanel({ result, displayFormat }: ResultsPanelProps) {
   return (
     <dl
       key={transitionKey}
-      className="grid animate-[fade-in_0.2s_ease-out] grid-cols-1 gap-4 rounded-xl border border-zinc-200 bg-white p-5 shadow-sm sm:grid-cols-2 dark:border-zinc-700 dark:bg-zinc-900"
+      className="soft-card calculator-results"
     >
       {rows.map((row) => (
-        <div key={row.label} className="flex flex-col gap-1">
-          <dt className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+        <div key={row.label} className="result-item">
+          <dt>
             {row.label}
           </dt>
-          <dd className="font-mono text-base font-semibold text-zinc-900 dark:text-zinc-50">
+          <dd>
             {row.value}
           </dd>
         </div>
