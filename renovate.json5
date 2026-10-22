@@ -3,7 +3,7 @@
   // npm 12 fails on bundled registry tarballs during --package-lock-only.
   // Remove this workaround once https://github.com/npm/cli/issues/9800 is fixed.
   constraints: {
-    npm: "^12.2.0",
+    npm: "^12.2.1",
   },
   dependencyDashboard: false,
   labels: ["dependencies"],
